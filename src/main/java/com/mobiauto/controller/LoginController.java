@@ -6,6 +6,8 @@ import com.mobiauto.model.Perfil;
 import com.mobiauto.model.Usuario;
 import com.mobiauto.model.dto.LoginRequestDTO;
 import com.mobiauto.model.dto.LoginResponseDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,6 +43,12 @@ public class LoginController {
     UsuarioRepository usuarioRepository;
 
     @PostMapping("/login")
+    @Operation(summary = "Efetua o login", description =
+            "Método destinado em logar o usuario e retornar o token. " +
+            "Não é necessário estar logado no sistema. ")
+    @ApiResponse(responseCode = "200", description = "Logado com sucesso e retornado o token")
+    @ApiResponse(responseCode = "401", description = "Erro ao autenticar o token")
+    @ApiResponse(responseCode = "404", description = "Erro ao gerar a autenticação")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO) {
         Authentication authentication;
         try {

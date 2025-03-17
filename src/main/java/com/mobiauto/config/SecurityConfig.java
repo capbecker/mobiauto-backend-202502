@@ -3,6 +3,8 @@ package com.mobiauto.config;
 import com.mobiauto.dao.UsuarioRepository;
 import com.mobiauto.model.Perfil;
 import com.mobiauto.model.Usuario;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -78,14 +80,12 @@ public class SecurityConfig {
             (request)-> request
                 .requestMatchers("/login", "/login/**").permitAll()
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
-                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
-
                 .anyRequest().authenticated()
             )
             .sessionManagement(session->session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .exceptionHandling(e->e.authenticationEntryPoint(entradaNaoAutorizada))
             .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
-            //.csrf(AbstractHttpConfigurer::disable)
+            .csrf(AbstractHttpConfigurer::disable)
             .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
             ;
         return http.build();

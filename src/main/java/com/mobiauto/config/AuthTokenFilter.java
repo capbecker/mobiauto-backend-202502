@@ -1,8 +1,5 @@
 package com.mobiauto.config;
 
-import com.mobiauto.dao.UsuarioRepository;
-import com.mobiauto.model.Usuario;
-import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +15,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.crypto.SecretKey;
 import java.io.IOException;
 
 @Component
@@ -39,7 +35,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             String jwt = parseJwt(request);
             if (jwt!=null && jwtUtils.validateToken(jwt)) {
                 String login = jwtUtils.getLoginFromJwtToken(jwt);
-                //Usuario usuario = extractUsuarioFromToken(jwt);
                 UserDetails userDetails = userDetailsService.loadUserByUsername(login);
 
                 UsernamePasswordAuthenticationToken authenticationToken =

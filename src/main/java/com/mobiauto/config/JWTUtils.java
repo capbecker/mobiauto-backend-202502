@@ -1,7 +1,5 @@
 package com.mobiauto.config;
 
-import com.mobiauto.dao.UsuarioRepository;
-import com.mobiauto.model.Usuario;
 import java.security.Key;
 
 import io.jsonwebtoken.*;
@@ -10,7 +8,6 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;

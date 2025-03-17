@@ -103,4 +103,15 @@ public class OportunidadeService {
 
         return oportunidadeRepository.save(oportunidade);
     }
+
+    public List<Oportunidade> buscarOportunidadesSemResponsavel() {
+        Specification<Oportunidade> spec = oportunidadeSpecification.buscarOportunidadesSemResponsavel();
+        return oportunidadeRepository.findAll(spec);
+    }
+
+    public void atribuiUsuario(Oportunidade oportunidade, Usuario usuario) {
+        oportunidade.setUsuario(usuario);
+        oportunidade.setStatus(Status.EM_ANDAMENTO);
+        oportunidadeRepository.save(oportunidade);
+    }
 }

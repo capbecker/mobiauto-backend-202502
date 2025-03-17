@@ -1,5 +1,6 @@
 package com.mobiauto.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -32,6 +33,11 @@ public class Usuario {
     @JoinColumn(name = "id_revenda")
     @JsonManagedReference
     private Revenda revenda;
+
+
+    @OneToMany(mappedBy="usuario")
+    @JsonBackReference
+    private List<Oportunidade> oportunidade;
 
     public Usuario() {
     }
@@ -99,5 +105,13 @@ public class Usuario {
 
     public void setRevenda(Revenda revenda) {
         this.revenda = revenda;
+    }
+
+    public List<Oportunidade> getOportunidade() {
+        return oportunidade;
+    }
+
+    public void setOportunidade(List<Oportunidade> oportunidade) {
+        this.oportunidade = oportunidade;
     }
 }

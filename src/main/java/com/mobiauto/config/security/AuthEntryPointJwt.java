@@ -1,4 +1,4 @@
-package com.mobiauto.config;
+package com.mobiauto.config.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;

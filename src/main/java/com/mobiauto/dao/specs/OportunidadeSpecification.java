@@ -2,6 +2,7 @@ package com.mobiauto.dao.specs;
 
 import com.mobiauto.model.*;
 import com.mobiauto.model.dto.OportunidadeFilterDTO;
+import com.mobiauto.model.enums.Status;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
@@ -24,7 +25,7 @@ public class OportunidadeSpecification {
             Join<Oportunidade, Cliente> joinCliente = root.join("cliente", JoinType.LEFT);
 
             if (Objects.nonNull(oportunidadeFilterDTO.getMotivoConclusao())) {
-                predicates.add(criteriaBuilder.like(root.get("motivo_conclusao"), "%"+oportunidadeFilterDTO.getMotivoConclusao()+"%"));
+                predicates.add(criteriaBuilder.like(root.get("motivoConclusao"), "%"+oportunidadeFilterDTO.getMotivoConclusao()+"%"));
             }
             if (Objects.nonNull(oportunidadeFilterDTO.getStatus())) {
                 predicates.add(criteriaBuilder.equal(root.get("status"), oportunidadeFilterDTO.getStatus()));
@@ -50,6 +51,20 @@ public class OportunidadeSpecification {
             if (Objects.nonNull(oportunidadeFilterDTO.getTelefoneCliente())) {
                 predicates.add(criteriaBuilder.like(joinCliente.get("telefone"), "%"+oportunidadeFilterDTO.getTelefoneCliente()+"%"));
             }
+
+            return criteriaBuilder.and(predicates.toArray(predicates.toArray(new Predicate[0])));
+        };
+    }
+
+    public Specification<Oportunidade> buscarOportunidadesSemResponsavel() {
+        return (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            Join<Oportunidade, Usuario> joinUsuario = root.join("usuario", JoinType.LEFT);
+            Join<Oportunidade, Revenda> joinRevenda = root.join("revenda");
+            predicates.add(criteriaBuilder.isNull(joinUsuario.get("id")));
+            predicates.add(criteriaBuilder.equal(root.get("status"), Status.NOVO));
+
+            query.orderBy(criteriaBuilder.asc(joinRevenda.get("id")),criteriaBuilder.asc(root.get("dataCriacao")));
 
             return criteriaBuilder.and(predicates.toArray(predicates.toArray(new Predicate[0])));
         };

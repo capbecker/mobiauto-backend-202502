@@ -1,4 +1,4 @@
-package com.mobiauto.config;
+package com.mobiauto.config.security;
 
 import com.mobiauto.dao.UsuarioRepository;
 import com.mobiauto.model.Usuario;

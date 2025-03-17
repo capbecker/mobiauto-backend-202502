@@ -1,0 +1,18 @@
+Mobiauto Backend
+Este é o backend do projeto Mobiauto, uma aplicação para gerenciamento de veículos, revendas, clientes, oportunidades e outros recursos.
+
+Tecnologias Usadas
+Spring Boot: Framework principal para o desenvolvimento do backend.
+Spring Data JPA: Para a integração com o banco de dados.
+PostgreSQL: Banco de dados utilizado para armazenar as informações.
+Spring Security: Para garantir a segurança das APIs.
+JWT: Para autenticação baseada em tokens.
+Swagger/OpenAPI: Para documentação das APIs.
+
+Configurações necessárias no application.properties:
+spring.datasource.url=jdbc:postgresql://localhost:5432/<BANCO>
+spring.datasource.username=<USERNAME>
+spring.datasource.password=<PASSWORD>
+
+spring.app.jwtSecret=segredo123456kjhdgkj9rjgfod7errgodfiuygu9redugdfy9dsfhifdg97dfyghfd456789134444
+spring.app.jwtExpiration=86400000  # tempo de expiração em milissegundos (1 dia)
